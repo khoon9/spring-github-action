@@ -1,6 +1,8 @@
 package com.example.springgithubaction.controller;
 
+import com.example.springgithubaction.dto.ArticleCommentDto;
 import com.example.springgithubaction.dto.ArticleDto;
+import com.example.springgithubaction.service.ArticleCommentService;
 import com.example.springgithubaction.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import java.util.List;
 public class MainController {
 
     public final ArticleService articleService;
+    public final ArticleCommentService articleCommentService;
 
     @GetMapping("/test")
     public String getTestString(){
@@ -34,5 +37,18 @@ public class MainController {
     public ResponseEntity<String> putArticles(@RequestBody ArticleDto articleDto){
         return ResponseEntity.ok(articleService.saveArticle(articleDto));
     }
+
+    @GetMapping("/articleComments")
+    public ResponseEntity<List<ArticleCommentDto>> getArticleComments(){
+        return ResponseEntity.ok(articleCommentService.getArticleComments());
+    }
+
+    @GetMapping("/{article_id}/articleComments")
+    public ResponseEntity<List<ArticleCommentDto>> getArticleCommentsByArticle_Id(@PathVariable Long article_id){
+        return ResponseEntity.ok(articleCommentService.getArticleCommentsByArticle_Id(article_id));
+    }
+
+
+
 
 }
